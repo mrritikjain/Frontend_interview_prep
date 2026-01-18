@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter App in JS</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      #buttons {
+        display: flex;
+        gap: 10px;
+      }
+      button {
+        margin: 10px;
+      }
+      h2 {
+        margin: 10px;
+      }
+      button:hover {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Counter App in JS</h1>
+    <div id="buttons">
+      <button onclick="increment()">Increment</button>
+      <button onclick="decrement()">Decrement</button>
+      <button onclick="reset()">Reset</button>
+    </div>
+    <h2>Counter: 0</h2>
+    <script>
+      let Count = 0;
+
+      function increment() {
+        Count++;
+        updateCount();
+      }
+      function decrement() {
+        if (Count > 0) {
+          Count--;
+          updateCount();
+        }
+      }
+      function reset() {
+        Count = 0;
+        updateCount();
+      }
+      function updateCount() {
+        document.querySelector("h2").textContent = `Counter: ${Count}`;
+      }
+    </script>
+  </body>
+</html>
