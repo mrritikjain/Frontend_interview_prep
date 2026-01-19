@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timer App in JS</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      #buttons {
+        display: flex;
+        gap: 10px;
+      }
+      button {
+        margin: 10px;
+      }
+      h2 {
+        margin: 10px;
+      }
+      button:hover {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Timer App in JS</h1>
+    <div id="buttons">
+      <button onclick="Play()">Play</button>
+      <button onclick="Pause()">Pause</button>
+      <button onclick="reset()">Reset</button>
+    </div>
+    <h2>Timer: 0</h2>
+    <script>
+      let time = 0;
+      let Timer = null;
+
+      function Play() {
+        if (Timer !== null) return;
+        Timer = setInterval(() => {
+          time++;
+          updateCount();
+        }, 1000);
+      }
+      function Pause() {
+        clearInterval(Timer);
+        Timer = null;
+      }
+      function reset() {
+        time = 0;
+        updateCount();
+      }
+      function updateCount() {
+        document.querySelector("h2").textContent = `Timer: ${time}`;
+      }
+    </script>
+  </body>
+</html>
