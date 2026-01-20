@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reusable Logger with Context Binding</title>
+  </head>
+  <body>
+    <h2>Reusable Logger with Context Binding</h2>
+    <script>
+      function logActivity(action, time) {
+        console.log(`${this.name} performed ${action} at ${time}`);
+      }
+
+      const user1 = { name: "Ritik" };
+      const user2 = { name: "Abhishek" };
+
+      //Call
+      logActivity.call(user1, "Login", "10AM");
+
+      //Apply
+      logActivity.apply(user2, ["Logout", "6 PM"]);
+
+      //Bind
+      let ritikloger = logActivity.bind(user1);
+      ritikloger("update Docx", "8 AM");
+    </script>
+  </body>
+</html>
