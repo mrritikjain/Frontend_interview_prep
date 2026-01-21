@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Search + Filter + Stats</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #fff;
+        padding: 30px;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      input,
+      select {
+        padding: 8px;
+        font-size: 16px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        background: #1e293b;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #334155;
+        text-align: left;
+      }
+
+      th {
+        background: #020617;
+      }
+
+      .active {
+        color: #22c55e;
+        font-weight: bold;
+      }
+
+      .inactive {
+        color: #ef4444;
+        font-weight: bold;
+      }
+
+      .stats {
+        margin-top: 15px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>User Search + Filter + Stats</h1>
+
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search by name..." />
+
+      <select id="statusFilter">
+        <option value="all">All</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="userTable"></tbody>
+    </table>
+
+    <div class="stats" id="stats"></div>
+
+    <script>
+      const users = [
+        { id: 1, name: "Ritik", age: 23, active: true },
+        { id: 2, name: "Aman", age: 27, active: false },
+        { id: 3, name: "Rohit", age: 25, active: true },
+        { id: 4, name: "Ankit", age: 30, active: false },
+        { id: 5, name: "Riya", age: 22, active: true },
+      ];
+
+      const searchInput = document.getElementById("searchInput");
+      const statusFilter = document.getElementById("statusFilter");
+      const userTable = document.getElementById("userTable");
+      const stats = document.getElementById("stats");
+
+      function renderUsers() {
+        let query = searchInput.value.toLowerCase();
+        let filters = statusFilter.value;
+
+        let filteredUsers = users.filter((user) => {
+          const matchesQuery = user.name.toLowerCase().includes(query);
+          const matchesFilter =
+            filters === "all" || user.active === (filters === "active");
+          return matchesQuery && matchesFilter;
+        });
+
+        userTable.innerHTML = "";
+
+        filteredUsers.forEach((user) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${user.name}</td>
+            <td>${user.age}</td>
+            <td class="${user.active ? "active" : "inactive"}">
+              ${user.active ? "Active" : "Inactive"}
+            </td>
+          `;
+          userTable.appendChild(tr);
+        });
+
+        const activeCount = filteredUsers.filter((u) => u.active).length;
+        const inactiveCount = filteredUsers.length - activeCount;
+        const avgAge =
+          filteredUsers.reduce((sum, u) => sum + u.age, 0) /
+          (filteredUsers.length || 1);
+
+        stats.innerHTML = `
+          <p>Total Users: ${filteredUsers.length}</p>
+          <p>Active Users: ${activeCount}</p>
+          <p>Inactive Users: ${inactiveCount}</p>
+          <p>Average Age: ${avgAge.toFixed(0)}</p>
+        `;
+      }
+
+      searchInput.addEventListener("input", renderUsers);
+      statusFilter.addEventListener("change", renderUsers);
+
+      renderUsers();
+    </script>
+  </body>
+</html>
