@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch API App</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      #users {
+        margin-top: 20px;
+      }
+      li {
+        list-style: none;
+        cursor: pointer;
+      }
+      li + li {
+        margin-top: 10px;
+      }
+      li:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Fetch API App</h1>
+    <button id="btn">Fetch Users</button>
+    <div id="users"></div>
+  </body>
+  <script>
+    const users = document.getElementById("users");
+    const btn = document.getElementById("btn");
+
+    btn.addEventListener("click", async () => {
+      users.innerText = "Loading";
+
+      try {
+        const res = await fetch("https://jsonplaceholder.typicode.com/users");
+        if (!res.ok) throw new Error("api failed");
+        const result = await res.json();
+        users.innerText = "";
+        result.forEach((user) => {
+          const li = document.createElement("li");
+          li.innerText = user.name;
+          li.addEventListener("click", () => {
+            users.innerText = "";
+            const userDiv = document.createElement("div");
+            userDiv.innerHTML = `
+              <h2>${user.name}</h2>
+              <p>${user.email}</p>
+              <p>${user.phone}</p>
+            `;
+            users.appendChild(userDiv);
+          });
+          users.appendChild(li);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  </script>
+</html>
