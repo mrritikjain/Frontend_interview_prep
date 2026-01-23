@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+  </head>
+  <body>
+    <input type="text" placeholder="Add Todo" />
+    <button id="btn">Add</button>
+    <ul></ul>
+  </body>
+  <script>
+    let input = document.querySelector("input");
+    let btn = document.getElementById("btn");
+    let list = document.querySelector("ul");
+    btn.addEventListener("click", () => {
+      if (!input.value.trim()) return;
+
+      let li = document.createElement("li");
+      li.innerText = input.value;
+      let Delete = document.createElement("button");
+      Delete.innerText = "Delete";
+      Delete.addEventListener("click", () => {
+        li.remove();
+      });
+      li.appendChild(Delete);
+      list.appendChild(li);
+
+      input.value = "";
+    });
+  </script>
+</html>
