@@ -11,7 +11,15 @@ const App = () => {
     setInput("");
   };
   const DeleteTodo = (index) => {
-    setTotos(Todos.filter((_,i) => i !== index));
+    setTotos(Todos.filter((_, i) => i !== index));
+  };
+  const editTodo = (index) => {
+    let updated = prompt("Edit Todo", Todos[index]);
+    if (updated !== null && updated.trim() !== "") {
+      const newTodo = [...Todos];
+      newTodo[index] = updated;
+      setTotos(newTodo);
+    }
   };
   return (
     <div>
@@ -24,10 +32,11 @@ const App = () => {
       />
       <button onClick={AddTodo}>Add</button>
       <ul>
-         {Todos.map((todo, index) => (
+        {Todos.map((todo, index) => (
           <li key={index}>
             {todo}
             <button onClick={() => DeleteTodo(index)}>❌</button>
+            <button onClick={() => editTodo(index)}>✏️</button>
           </li>
         ))}
       </ul>
