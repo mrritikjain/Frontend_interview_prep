@@ -43,20 +43,48 @@
     let input = document.querySelector("input");
     let btn = document.getElementById("btn");
     let list = document.querySelector("ul");
+    let todos = [];
     btn.addEventListener("click", () => {
       if (!input.value.trim()) return;
 
-      let li = document.createElement("li");
-      li.innerText = input.value;
-      let Delete = document.createElement("button");
-      Delete.innerText = "Delete";
-      Delete.addEventListener("click", () => {
-        li.remove();
-      });
-      li.appendChild(Delete);
-      list.appendChild(li);
-
+      todos.push(input.value);
       input.value = "";
+      renderTodos();
     });
+
+    function renderTodos() {
+      list.innerHTML = "";
+
+      todos.forEach((todo, index) => {
+        let li = document.createElement("li");
+        li.innerText = todo;
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "❌";
+        deleteBtn.onclick = () => deleteTodo(index);
+
+        let editBtn = document.createElement("button");
+        editBtn.innerText = "✏️";
+        editBtn.onclick = () => editTodo(index);
+
+        li.appendChild(editBtn);
+        li.appendChild(deleteBtn);
+        list.appendChild(li);
+      });
+    }
+
+    function deleteTodo(index) {
+      todos.splice(index, 1);
+      renderTodos();
+    }
+
+    function editTodo(index) {
+      newTodo = prompt("Edit Todo", todos[index]);
+
+      if(newTodo !== null && newTodo.trim() !== ""){
+        todos[index] = newTodo;
+        renderTodos();
+      }
+    }
   </script>
 </html>
