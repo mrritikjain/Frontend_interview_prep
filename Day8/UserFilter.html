@@ -5,5 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Filter</title>
   </head>
-  <body></body>
+  <body>
+    <h2>Users List</h2>
+
+    <input type="text" placeholder="Search User" id="search" />
+
+    <select id="gender">
+      <option value="all">All</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+
+    <ul id="list"></ul>
+
+    <script>
+      const search = document.getElementById("search");
+      const gender = document.getElementById("gender");
+      const list = document.getElementById("list");
+
+      let users = [];
+
+      // ✅ useEffect equivalent
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchUsers();
+      });
+
+      function fetchUsers() {
+        fetch("https://dummyjson.com/users")
+          .then((res) => res.json())
+          .then((data) => {
+            users = data.users;
+            render();
+          });
+      }
+
+      search.addEventListener("keyup", render);
+      gender.addEventListener("change", render);
+
+      function render() {
+        list.innerHTML = "";
+
+        const filteredUsers = users.filter((user) => {
+          const nameMatch = user.firstName
+            .toLowerCase()
+            .includes(search.value.toLowerCase());
+
+          const genderMatch =
+            gender.value === "all" ? true : user.gender === gender.value;
+
+          return nameMatch && genderMatch;
+        });
+
+        filteredUsers.forEach((user) => {
+          const li = document.createElement("li");
+          li.innerText = `${user.firstName} - ${user.gender}`;
+          list.appendChild(li);
+        });
+      }
+    </script>
+  </body>
 </html>
