@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simplest Pagination</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 50px;
+      }
+      .pagination {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 20px;
+      }
+      button {
+        padding: 8px 12px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        background: white;
+        border-radius: 4px;
+      }
+      button.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+      button:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+      #page-display {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="page-display">Page 1</div>
+
+    <div class="pagination">
+      <button id="prev">Prev</button>
+      <div id="numbers" style="display: flex; gap: 5px"></div>
+      <button id="next">Next</button>
+    </div>
+
+    <script>
+      let currentPage = 1;
+      const totalPages = 5;
+
+      const display = document.getElementById("page-display");
+      const numContainer = document.getElementById("numbers");
+      const prevBtn = document.getElementById("prev");
+      const nextBtn = document.getElementById("next");
+
+      function updateUI() {
+        display.textContent = `Page ${currentPage}`;
+
+        numContainer.innerHTML = "";
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement("button");
+          btn.textContent = i;
+          if (i === currentPage) btn.className = "active";
+          btn.onclick = () => {
+            currentPage = i;
+            updateUI();
+          };
+          numContainer.appendChild(btn);
+        }
+
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+      }
+
+      prevBtn.onclick = () => {
+        if (currentPage > 1) {
+          currentPage--;
+          updateUI();
+        }
+      };
+
+      nextBtn.onclick = () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          updateUI();
+        }
+      };
+
+      // Initial call
+      updateUI();
+    </script>
+  </body>
+</html>
