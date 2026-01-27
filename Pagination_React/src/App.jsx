@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  let totalPages = 5;
+  const [currentPage, setCurrentPage] = useState(1);
 
+  const goTopage = (num) => {
+    setCurrentPage(num);
+  };
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div>
+      <h2>Page {currentPage}</h2>
+      <div style={{ display: "flex", gap: "10px" }}>
+        <button
+          onClick={() => goTopage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        {[...Array(totalPages)].map((_, i) => {
+          const pageNum = i + 1;
+          return <button onClick={() => goTopage(pageNum)}>{pageNum}</button>;
+        })}
+        <button
+          onClick={() => goTopage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default App
+export default App;
