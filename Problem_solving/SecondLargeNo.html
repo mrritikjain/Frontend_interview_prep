@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find second largest number
+</title>
+</head>
+<body>
+ <script>
+   function secondLargest(arr){
+    let sorted = arr.sort((a,b)=>b-a);
+    return sorted[1]
+  }
+  console.log(secondLargest([1,4,63,34,54]))
+ </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rotate array by k elements</title>
+  </head>
+  <body>
+    <script>
+      function Rotate(arr, k) {
+        k = k % arr.length;
+        return arr.slice(-k).concat(arr.slice(0, -k));
+      }
+      console.log(Rotate([1, 3, 5, 25, 2, 5, 2], 4));
+    </script>
+  </body>
+</html>
