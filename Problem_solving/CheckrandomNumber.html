@@ -1,15 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Check Random number in range</title>
-</head>
-<body>
-  <script>
-    function random(min,max){
-      return Math.floor(Math.random()*(max-min+1))+min;
-    }
-    console.log(random(2,10));  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Check Random Number from given range</title>
+  </head>
+  <body>
+    <script>
+      function checkRandomNumber(min, max) {
+        let randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+        return randomNumber;
+      }
+      console.log(checkRandomNumber(1, 10));
+    </script>
+  </body>
 </html>
