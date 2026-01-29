@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Missing Number</title>
+</head>
+<body>
+  <script>
+     
+    function findMissing(arr,n){
+  const sumExpected=n*(n+1)/2;
+  const sumActual=arr.reduce((a,b)=>a+b,0);
+  return sumExpected-sumActual;
+}
+console.log(findMissing([1,2,4,5],5))
+  </script>
+</body>
+</html>
