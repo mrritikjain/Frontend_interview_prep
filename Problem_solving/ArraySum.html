@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Max in array</title>
+</head>
+<body>
+  <script>
+    let arr = [1,4,63,3,56,23];
+    let sum = 0;
+    for(let i=0;i<arr.length;i++){
+      sum+=arr[i];
+    }
+    console.log(sum);
+
+    //option 2
+
+    console.log(arr.reduce((a,b)=>a+b,0));
+  </script>
+</body>
+</html>
