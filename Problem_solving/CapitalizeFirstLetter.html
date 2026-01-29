@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capitalize first Letter of each word</title>
+</head>
+<body>
+  <script>
+    function capitalize(str){
+      return str.split(' ').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');
+        }
+        console.log(capitalize("my name is ritik."))
+  </script>
+</body>
+</html>
