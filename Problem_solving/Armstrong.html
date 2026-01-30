@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Check Armstrong</title>
+  </head>
+  <body>
+    <script>
+      function isArmstrong(num) {
+        let digits = num.toString();
+        return num === digits.split("").reduce((sum,d)=>sum+Math.pow(Number(d),digits.length),0);
+      }
+      console.log(isArmstrong(344))
+    </script>
+  </body>
+</html>
