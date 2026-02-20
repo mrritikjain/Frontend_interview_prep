@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Practice</title>
+  </head>
+  <body>
+    <script>
+      //Two Sum
+      const num1 = 5;
+      const num2 = 4;
+
+      const sum = num1 + num2;
+      console.log(sum);
+
+      //Even & odd
+      const num = 34;
+      if (num % 2 == 0) {
+        console.log("Number is even");
+      } else {
+        console.log("Number is odd");
+      }
+
+      //Count Down
+
+      let x = 8;
+      for (let i = x; i > 0; i--) {
+        console.log(i);
+      }
+
+      //Maximum of array
+
+      let arr = [3, 5, 9, 15];
+      let max = arr[0];
+      for (let i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+          max = arr[i];
+        }
+      }
+      console.log(max);
+
+      //Greating function
+      function greet(name) {
+        console.log("Hello " + name);
+      }
+      greet("Ritik !");
+    </script>
+  </body>
+</html>

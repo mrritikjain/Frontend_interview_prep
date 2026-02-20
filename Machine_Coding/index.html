@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comment Widget</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+      :root {
+        --primary: #4f46e5;
+        --primary-hover: #4338ca;
+        --bg-main: #f8fafc;
+        --bg-card: #ffffff;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+        --shadow:
+          0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --shadow-lg:
+          0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+
+      #root {
+        width: 100%;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      h1 {
+        font-size: 24px;
+        font-weight: 700;
+        text-align: center;
+        color: var(--text-main);
+        margin-bottom: 8px;
+      }
+
+      #comment-container {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      /* Form Styling */
+      #comment-form {
+        background: var(--bg-card);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      #comment-input {
+        width: 100%;
+        min-height: 100px;
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        font-family: inherit;
+        font-size: 15px;
+        resize: vertical;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        background: #fff;
+      }
+
+      #comment-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      }
+
+      #comment-button {
+        align-self: flex-end;
+        padding: 10px 20px;
+        background-color: var(--primary);
+        color: white;
+        font-weight: 600;
+        font-size: 14px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          background-color 0.2s,
+          transform 0.1s;
+      }
+
+      #comment-button:hover {
+        background-color: var(--primary-hover);
+      }
+
+      #comment-button:active {
+        transform: scale(0.98);
+      }
+
+      /* Comment List Styling */
+      #comment-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .comment-item {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: var(--shadow);
+        position: relative;
+        transition: box-shadow 0.2s;
+      }
+
+      .comment-item:hover {
+        box-shadow: var(--shadow-lg);
+      }
+
+      .comment-text {
+        font-size: 15px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+        color: var(--text-main);
+      }
+
+      .comment-actions {
+        display: flex;
+        gap: 12px;
+        border-top: 1px solid var(--border);
+        padding-top: 12px;
+      }
+
+      .action-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: color 0.1s;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .action-btn:hover {
+        color: var(--primary);
+      }
+
+      .action-btn.delete:hover {
+        color: #ef4444;
+      }
+
+      /* Nested Replies Styling */
+      .replies {
+        list-style: none;
+        margin-top: 12px;
+        padding-left: 20px;
+        border-left: 2px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 480px) {
+        body {
+          padding: 20px 10px;
+        }
+        .comment-actions {
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <h1>Comment Widget</h1>
+      <div id="comment-container">
+        <div id="comment-form">
+          <textarea
+            id="comment-input"
+            placeholder="Enter your comment..."
+          ></textarea>
+          <button id="comment-button">Post Comment</button>
+        </div>
+        <ul id="comment-list"></ul>
+      </div>
+    </div>
+    <script>
+      const commentInput = document.getElementById("comment-input");
+      const commentButton = document.getElementById("comment-button");
+      const commentList = document.getElementById("comment-list");
+
+      // Helper to create a comment/reply element with all functionality
+      function createComment(text) {
+        let isLiked = false;
+        let likesCount = 0;
+
+        const commentItem = document.createElement("li");
+        commentItem.classList.add("comment-item");
+
+        const textDiv = document.createElement("div");
+        textDiv.classList.add("comment-text");
+        textDiv.textContent = text;
+
+        const actionsDiv = document.createElement("div");
+        actionsDiv.classList.add("comment-actions");
+
+        const likeBtn = document.createElement("button");
+        likeBtn.classList.add("action-btn");
+        likeBtn.textContent = "Like";
+
+        const countSpan = document.createElement("span");
+        countSpan.classList.add("like-count");
+        countSpan.style.cssText = "font-size: 13px; color: var(--text-muted);";
+        countSpan.textContent = "0";
+
+        const editBtn = document.createElement("button");
+        editBtn.classList.add("action-btn");
+        editBtn.textContent = "Edit";
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("action-btn", "delete");
+        deleteBtn.textContent = "Delete";
+
+        const replyBtn = document.createElement("button");
+        replyBtn.classList.add("action-btn");
+        replyBtn.textContent = "Reply";
+
+        actionsDiv.append(likeBtn, countSpan, editBtn, deleteBtn, replyBtn);
+        commentItem.append(textDiv, actionsDiv);
+
+        // --- Event Listeners ---
+
+        // Toggleable Like
+        likeBtn.addEventListener("click", () => {
+          isLiked = !isLiked;
+          likesCount += isLiked ? 1 : -1;
+          countSpan.textContent = likesCount;
+          likeBtn.textContent = isLiked ? "Unlike" : "Like";
+          likeBtn.style.color = isLiked ? "var(--primary)" : "";
+        });
+
+        // Edit
+        editBtn.addEventListener("click", () => {
+          const newText = prompt("Edit your comment", textDiv.textContent);
+          if (newText !== null && newText.trim() !== "") {
+            textDiv.textContent = newText;
+          }
+        });
+
+        // Delete
+        deleteBtn.addEventListener("click", () => {
+          commentItem.remove();
+        });
+
+        // Recursive Reply
+        replyBtn.addEventListener("click", () => {
+          const replyText = prompt("Enter your reply");
+          if (replyText !== null && replyText.trim() !== "") {
+            let repliesList = commentItem.querySelector(".replies");
+            if (!repliesList) {
+              repliesList = document.createElement("ul");
+              repliesList.classList.add("replies");
+              commentItem.appendChild(repliesList);
+            }
+            repliesList.appendChild(createComment(replyText));
+          }
+        });
+
+        return commentItem;
+      }
+
+      // Main event listener for top-level comments
+      commentButton.addEventListener("click", () => {
+        const commentText = commentInput.value.trim();
+        if (commentText) {
+          commentList.appendChild(createComment(commentText));
+          commentInput.value = "";
+        }
+      });
+    </script>
+  </body>
+</html>
