@@ -45,6 +45,56 @@
         console.log("Hello " + name);
       }
       greet("Ritik !");
+
+      //Shopping cart total
+      const cart = [
+        { name: "Book", price: 12.99 },
+        { name: "Headphones", price: 29.99 },
+      ];
+
+      let total = 0;
+
+      for (items of cart) {
+        total += items.price;
+      }
+      console.log(total);
+
+      //Reverse string
+      let str = "Ritik";
+      let reversed = "";
+
+      for (let i = str.length - 1; i >= 0; i--) {
+        reversed += str[i];
+      }
+
+      console.log(reversed);
+
+      //word count
+
+      let text = "Ritikjain";
+      let word = text.trim().split("");
+      console.log(word.length);
+
+//       guess number
+
+//       let number = Math.floor(Math.random() * 20) + 1;
+//       let guess;
+
+//       while (guess !== number) {
+//         guess = Number(prompt("Enter your Number:"));
+//       if(guess<number)
+//         alert("Too Low");
+//     else if(guess>number)
+//       alert("too high")
+//   else
+//     alert("Correct !");
+// }
+
+//Even number filter
+
+let nums = [2,4,73,36,63,28];
+let evens = nums.filter(n=> n%2==0);
+console.log(evens);
     </script>
   </body>
 </html>
