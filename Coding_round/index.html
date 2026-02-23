@@ -4,8 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Coding Practice</title>
+    <style>
+      .hidden{
+        display: none;
+      }
+    </style>
   </head>
   <body>
+    <ul></ul>
+    <button>Toggle Button</button>
+    <p>
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad non culpa
+      accusantium ex, illo rerum eius labore officiis! Eaque nostrum placeat
+      quaerat cupiditate fugiat. Dolorem quasi aliquid dolores similique nulla.
+    </p>
     <script>
       //Two Sum
       const num1 = 5;
@@ -75,26 +87,49 @@
       let word = text.trim().split("");
       console.log(word.length);
 
-//       guess number
+      //       guess number
 
-//       let number = Math.floor(Math.random() * 20) + 1;
-//       let guess;
+      //       let number = Math.floor(Math.random() * 20) + 1;
+      //       let guess;
 
-//       while (guess !== number) {
-//         guess = Number(prompt("Enter your Number:"));
-//       if(guess<number)
-//         alert("Too Low");
-//     else if(guess>number)
-//       alert("too high")
-//   else
-//     alert("Correct !");
-// }
+      //       while (guess !== number) {
+      //         guess = Number(prompt("Enter your Number:"));
+      //       if(guess<number)
+      //         alert("Too Low");
+      //     else if(guess>number)
+      //       alert("too high")
+      //   else
+      //     alert("Correct !");
+      // }
 
-//Even number filter
+      //Even number filter
 
-let nums = [2,4,73,36,63,28];
-let evens = nums.filter(n=> n%2==0);
-console.log(evens);
+      let nums = [2, 4, 73, 36, 63, 28, 4, 63];
+      let evens = nums.filter((n) => n % 2 == 0);
+      console.log(evens);
+
+      //Sum with reduce
+
+      const totalSum = nums.reduce((acc, n) => acc + n, 0);
+      console.log(totalSum);
+
+      //unique value with set
+      const unique = [...new Set(nums)];
+      console.log(unique);
+      let ul = document.querySelector("ul");
+      const tasks = ["apple", "banana", "graps"];
+      tasks.forEach((task) => {
+        const li = document.createElement("li");
+        li.innerText = task;
+        ul.appendChild(li);
+      });
+
+      //show hide toggle
+      const btn = document.querySelector("button");
+      const pera = document.querySelector("p");
+      btn.addEventListener("click", () => {
+        pera.classList.toggle("hidden");
+      });
     </script>
   </body>
 </html>
