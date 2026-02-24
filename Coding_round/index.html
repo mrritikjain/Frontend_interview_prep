@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Coding Practice</title>
     <style>
-      .hidden{
+      .hidden {
         display: none;
       }
     </style>
@@ -18,6 +18,13 @@
       accusantium ex, illo rerum eius labore officiis! Eaque nostrum placeat
       quaerat cupiditate fugiat. Dolorem quasi aliquid dolores similique nulla.
     </p>
+    <form action="" method="get">
+      <input type="email" name="" id="email" />
+      <input type="password" name="" id="pass" />
+      <button type="submit" id="submit">Submit</button>
+    </form>
+    <button type="button" id="countbtn">count</button>
+    <p id="totalcount"></p>
     <script>
       //Two Sum
       const num1 = 5;
@@ -130,6 +137,48 @@
       btn.addEventListener("click", () => {
         pera.classList.toggle("hidden");
       });
+
+      // Form validation
+      let email = document.getElementById("email");
+      let password = document.getElementById("pass"); // ✅ fixed
+      let form = document.querySelector("form");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        if (!email.value || !password.value) {
+          alert("please fill all the fields");
+        } else {
+          alert("form submitted successfully");
+          form.reset();
+        }
+      });
+
+      //persist click counter
+
+      let countbtn = document.getElementById("countbtn");
+      let totalcount = document.getElementById("totalcount");
+      let totalcnt = Number(localStorage.getItem("count")) || 0;
+      totalcount.textContent = totalcnt;
+
+      countbtn.addEventListener("click", () => {
+        totalcnt++;
+        totalcount.textContent = totalcnt;
+        localStorage.setItem("count", totalcnt);
+      });
+
+      //FizzBuzz
+      for (let i = 0; i <= 100; i++) {
+        if (i % 15 == 0) {
+          console.log("FizzBuzz");
+        } else if (i % 5 == 0) {
+          console.log("Fizz");
+        } else if (i % 3 == 0) {
+          console.log("Buzz");
+        } else {
+          console.log(i);
+        }
+      }
     </script>
   </body>
 </html>
