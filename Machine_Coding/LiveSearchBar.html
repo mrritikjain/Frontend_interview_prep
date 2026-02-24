@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Search Bar</title>
+  </head>
+  <body>
+    <input type="text" name="search bar" id="search" />
+    <ul id="items">
+      <li>apple</li>
+      <li>banana</li>
+      <li>mango</li>
+    </ul>
+    <script>
+      let input = document.getElementById("search");
+
+      input.addEventListener("input", (e) => {
+        let filter = e.target.value.toLowerCase();
+        document.querySelectorAll("#items li").forEach((li) => {
+          li.style.display = li.textContent.toLowerCase().includes(filter)
+            ? " "
+            : "none";
+        });
+      });
+    </script>
+  </body>
+</html>
