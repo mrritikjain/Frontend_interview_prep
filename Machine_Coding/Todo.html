@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TO Do App</title>
+    <style>
+      .done {
+        text-decoration: line-through;
+      }
+      span {
+        border: 1px solid rgb(59, 59, 59);
+        padding: 5px;
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" id="TodoValue" placeholder="Enter value here..." />
+    <button id="Todobtn">Add</button>
+    <ul id="items"></ul>
+
+    <script>
+      let input = document.getElementById("TodoValue");
+      let btn = document.getElementById("Todobtn");
+      let items = document.getElementById("items");
+
+      btn.addEventListener("click", (e) => {
+        if (input.value == "") {
+          alert("Enter a value First");
+        } else {
+          const li = document.createElement("li");
+          li.innerText = input.value;
+          li.addEventListener("click", () => li.classList.toggle("done"));
+          items.appendChild(li);
+          input.value = "";
+          const span = document.createElement("span");
+          span.innerText = "Delete";
+          span.addEventListener("click", ()=> li.remove())
+          li.appendChild(span);
+        }
+      });
+    </script>
+  </body>
+</html>
