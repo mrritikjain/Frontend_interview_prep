@@ -220,6 +220,54 @@
       }
       console.log(fibbo(1));
       console.log(fibbo(4));
+
+      //count character frequency
+      function frequency(text) {
+        freq = {};
+        for (ch of text) {
+          freq[ch] = (freq[ch] || 0) + 1;
+        }
+        return freq;
+      }
+      console.log(frequency("banana"));
+
+      //sorting without sort fn
+
+      function bubbleSort(ar) {
+        for (let i = 0; i < ar.length - 1; i++) {
+          for (let j = 0; j < ar.length - 1 - i; j++) {
+            if (ar[j] > ar[j + 1]) {
+              [ar[j], ar[j + 1]] = [ar[j + 1], ar[j]];
+            }
+          }
+        }
+        return ar;
+      }
+      console.log(bubbleSort([1, 3, 2, 4, 34, 234, 23, 45, 22]));
+
+      //unique element
+      function uniqueElem(arry) {
+        result = [];
+        for (const item of arry) {
+          if (!result.includes(item)) {
+            result.push(item);
+          }
+        }
+        return result;
+      }
+      console.log(uniqueElem([1, 1, 23, 43, 23, 43]));
+
+      //safe  json parse
+
+      function safeJsonParse(str) {
+        try {
+          return { true: JSON.parse(str) };
+        } catch (err){
+          return {  false: err.message };
+        }
+      }
+      console.log(safeJsonParse('{"a":1}'));
+      console.log(safeJsonParse("{bad json}"));
     </script>
   </body>
 </html>
