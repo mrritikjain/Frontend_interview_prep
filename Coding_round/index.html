@@ -296,6 +296,18 @@
           arr[n - 1] = first;
         }
       }
+
+      // Palindrom
+
+      function isPalindrom(str){
+        let reverse = str.split("").reverse().join();
+        if(str == reverse){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
     </script>
   </body>
 </html>
